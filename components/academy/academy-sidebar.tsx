@@ -106,10 +106,10 @@ export function AcademySidebar() {
                   <img
                     src="/logo.png"
                     className="me-1 size-8 rounded-[5px]"
-                    alt="Mukkamal logo"
+                    alt="Hamdard School logo"
                   />
                   <span className="flex min-w-0 flex-col">
-                    <span className="text-foreground font-semibold leading-tight">Mukkamal</span>
+                    <span className="text-foreground font-semibold leading-tight">Hamdard School</span>
                     <span className="text-xs leading-tight text-muted-foreground">
                       School Management System
                     </span>
@@ -156,30 +156,6 @@ export function AcademySidebar() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div data-slot="sidebar-footer" className="flex flex-col gap-2 p-2">
-            <div
-              data-slot="card"
-              className="group/card flex flex-col gap-1 overflow-hidden rounded-xl bg-muted/40 text-sm text-card-foreground ring-1 ring-foreground/10 p-3"
-            >
-              <div className="space-y-1">
-                <div data-slot="card-title" className="font-heading text-sm leading-snug font-semibold">
-                  Get This Template
-                </div>
-                <div data-slot="card-description" className="text-sm text-muted-foreground">
-                  Download the full source code. Every dashboard you see in this demo is included.
-                </div>
-              </div>
-              <a
-                href="#"
-                data-slot="button"
-                data-variant="default"
-                data-size="default"
-                className="group/button inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground shadow-2xs hover:bg-primary/90 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 w-full"
-              >
-                Download Template
-              </a>
             </div>
           </div>
         </div>

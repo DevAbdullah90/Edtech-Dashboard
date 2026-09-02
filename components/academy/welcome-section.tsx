@@ -17,7 +17,7 @@ export function WelcomeSection() {
           <div className="grid w-full items-center pb-2 lg:grid-cols-3">
             <div className="space-y-4 lg:col-span-2">
               <div className="font-display text-3xl">
-                Welcome, Toby <span className="text-4xl">👋</span>
+                Welcome Sana <span className="text-4xl">👋</span>
               </div>
               <div className="text-2xl">What do you want to learn today?</div>
               <div className="text-muted-foreground">
