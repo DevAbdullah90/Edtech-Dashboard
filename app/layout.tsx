@@ -9,8 +9,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Academy Admin Dashboard Template for Shadcn UI",
-  description: "Academy/School dashboard built with Next.js, TypeScript and Tailwind CSS",
+  title: "Hamdard School - School Management System",
+  description: "Hamdard School management dashboard built with Next.js, TypeScript and Tailwind CSS",
 };
 
 export default function RootLayout({

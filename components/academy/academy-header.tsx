@@ -35,7 +35,7 @@ export function AcademyHeader() {
           className="group/button inline-flex h-7 shrink-0 items-center justify-center gap-1 rounded-[min(var(--radius-md),12px)] border border-transparent bg-clip-padding px-2.5 text-[0.8rem] font-medium whitespace-nowrap transition-all outline-none select-none hover:bg-muted hover:text-foreground"
         >
           <span className="size-4 shrink-0 rounded-full bg-gradient-to-br from-amber-400 to-orange-600" />
-          <span className="hidden font-medium md:inline">Shadcn Outlet</span>
+          <span className="hidden font-medium md:inline">Hamdard School</span>
           <ChevronsUpDown className="size-3.5 text-muted-foreground" />
         </button>
         <div className="ml-auto flex items-center gap-2">
