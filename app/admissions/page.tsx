@@ -1,53 +1,80 @@
-import { FilePlus, Users, ClipboardList, CalendarClock } from "lucide-react";
+import { UserPlus, FileText, CheckCircle2, Clock, TrendingUp, Users, School, CalendarCheck } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { ProgressListCard, InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type Admission = {
   applicant: string;
-  applyingFor: string;
+  class: string;
   guardian: string;
-  contact: string;
-  submitted: string;
+  appliedDate: string;
   status: string;
 };
 
 const admissions: Admission[] = [
-  { applicant: "Hamza Ahmed", applyingFor: "Class 5-A", guardian: "Ahmed Raza", contact: "0311-2233445", submitted: "2026-08-28", status: "Approved" },
-  { applicant: "Areeba Khan", applyingFor: "Class 6-B", guardian: "Khan Sahib", contact: "0312-3344556", submitted: "2026-08-29", status: "Pending" },
-  { applicant: "Usman Ali", applyingFor: "Class 7-A", guardian: "Ali Hassan", contact: "0313-4455667", submitted: "2026-08-30", status: "Pending" },
-  { applicant: "Sara Malik", applyingFor: "Class 8-C", guardian: "Malik Javed", contact: "0314-5566778", submitted: "2026-08-31", status: "Approved" },
-  { applicant: "Talha Qureshi", applyingFor: "Class 5-B", guardian: "Qureshi Imran", contact: "0315-6677889", submitted: "2026-09-01", status: "Rejected" },
-  { applicant: "Hira Shahid", applyingFor: "Class 6-A", guardian: "Shahid Mehmood", contact: "0316-7788990", submitted: "2026-09-02", status: "Pending" },
+  { applicant: "Ali Raza", class: "Class 1-A", guardian: "Mr. Raza Ahmed", appliedDate: "2026-09-01", status: "Approved" },
+  { applicant: "Hina Shahid", class: "Class 2-B", guardian: "Mrs. Shahid", appliedDate: "2026-09-01", status: "Pending" },
+  { applicant: "Usman Tariq", class: "Class 3-A", guardian: "Mr. Tariq Mehmood", appliedDate: "2026-09-02", status: "Approved" },
+  { applicant: "Sara Iqbal", class: "Class 4-C", guardian: "Mr. Iqbal Hussain", appliedDate: "2026-09-02", status: "Pending" },
+  { applicant: "Hamza Yousaf", class: "Class 5-B", guardian: "Mr. Yousaf Ali", appliedDate: "2026-09-03", status: "Rejected" },
+  { applicant: "Areeba Khan", class: "Class 6-A", guardian: "Mr. Khan", appliedDate: "2026-09-03", status: "Approved" },
 ];
 
 const columns: Column<Admission>[] = [
-  { key: "applicant", header: "Applicant", render: (a) => <span className="font-medium">{a.applicant}</span> },
-  { key: "applyingFor", header: "Applying For", render: (a) => <Badge variant="outline">{a.applyingFor}</Badge> },
-  { key: "guardian", header: "Guardian", render: (a) => a.guardian },
-  { key: "contact", header: "Contact", render: (a) => <span className="text-muted-foreground">{a.contact}</span> },
-  { key: "submitted", header: "Submitted", render: (a) => a.submitted },
-  { key: "status", header: "Status", render: (a) => <StatusBadge status={a.status} /> },
+  { key: "applicant", header: "Applicant", render: (r) => <span className="font-medium">{r.applicant}</span> },
+  { key: "class", header: "Class", render: (r) => <Badge variant="outline">{r.class}</Badge> },
+  { key: "guardian", header: "Guardian", render: (r) => r.guardian },
+  { key: "appliedDate", header: "Applied", render: (r) => <span className="text-muted-foreground">{r.appliedDate}</span> },
+  { key: "status", header: "Status", render: (r) => <StatusBadge status={r.status} /> },
 ];
 
-export default function OnlineAdmissionsPage() {
+export default function AdmissionsPage() {
   return (
     <StaticPageLayout
-      title="Online Admissions"
-      description="Manage online admission applications and enrollment."
+      title="Admissions"
+      description="Manage new student admissions and enrollment."
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={FilePlus} label="Applications" value="86" />
-        <StatCard icon={Users} label="Approved" value="54" color="bg-green-500/10" />
-        <StatCard icon={ClipboardList} label="Pending Review" value="28" color="bg-amber-500/10" />
-        <StatCard icon={CalendarClock} label="Admission Deadline" value="Sep 30" color="bg-purple-500/10" />
+        <StatCard icon={UserPlus} label="Applications" value="186" />
+        <StatCard icon={CheckCircle2} label="Approved" value="142" color="bg-green-500/10" />
+        <StatCard icon={Clock} label="Pending" value="32" color="bg-amber-500/10" />
+        <StatCard icon={FileText} label="Rejected" value="12" color="bg-red-500/10" />
       </div>
-      <DataTable
-        title="Admission Applications"
-        description="Recent online admission applications"
-        columns={columns}
-        data={admissions}
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Recent Applications"
+            description="Latest admission applications received"
+            columns={columns}
+            data={admissions}
+          />
+        }
+        right={
+          <>
+            <ProgressListCard
+              title="Admission Status"
+              description="Application status distribution"
+              items={[
+                { label: "Approved", value: 76, display: "76%", color: "bg-green-500" },
+                { label: "Pending", value: 17, display: "17%", color: "bg-amber-500" },
+                { label: "Rejected", value: 7, display: "7%", color: "bg-red-500" },
+              ]}
+            />
+            <InfoGridCard
+              title="Admission Overview"
+              description="Admission season statistics"
+              items={[
+                { label: "Capacity", value: "200 seats", icon: Users, color: "bg-blue-500/10" },
+                { label: "Filled", value: "142", icon: School, color: "bg-green-500/10" },
+                { label: "Available", value: "58", icon: CalendarCheck, color: "bg-amber-500/10" },
+                { label: "Conversion", value: "76%", icon: TrendingUp, color: "bg-purple-500/10" },
+              ]}
+            />
+          </>
+        }
       />
     </StaticPageLayout>
   );

@@ -1,7 +1,8 @@
-import { ClipboardCheck, UserCheck, UserX, Clock } from "lucide-react";
+import { ClipboardCheck, UserCheck, UserX, Clock, CalendarCheck2, AlertTriangle } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { ProgressListCard, InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type AttendanceRecord = {
@@ -45,11 +46,40 @@ export default function AttendancePage() {
         <StatCard icon={UserX} label="Absent" value="72" color="bg-red-500/10" />
         <StatCard icon={Clock} label="Late Arrivals" value="18" color="bg-amber-500/10" />
       </div>
-      <DataTable
-        title="Today's Attendance"
-        description="Attendance records for September 2, 2026"
-        columns={columns}
-        data={records}
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Today's Attendance"
+            description="Attendance records for September 2, 2026"
+            columns={columns}
+            data={records}
+          />
+        }
+        right={
+          <>
+            <ProgressListCard
+              title="Attendance by Class"
+              description="Today's attendance rate per class"
+              items={[
+                { label: "Class 5", value: 97, display: "97%", color: "bg-green-500" },
+                { label: "Class 6", value: 95, display: "95%", color: "bg-blue-500" },
+                { label: "Class 7", value: 92, display: "92%", color: "bg-amber-500" },
+                { label: "Class 8", value: 89, display: "89%", color: "bg-red-500" },
+              ]}
+            />
+            <InfoGridCard
+              title="Weekly Summary"
+              description="This week's attendance"
+              items={[
+                { label: "Avg Attendance", value: "94.2%", icon: CalendarCheck2, color: "bg-green-500/10" },
+                { label: "Total Absences", value: "86", icon: UserX, color: "bg-red-500/10" },
+                { label: "Late Arrivals", value: "24", icon: Clock, color: "bg-amber-500/10" },
+                { label: "Needs Attention", value: "12", icon: AlertTriangle, color: "bg-orange-500/10" },
+              ]}
+            />
+          </>
+        }
       />
     </StaticPageLayout>
   );

@@ -1,7 +1,8 @@
-import { BookOpen, BookMarked, Layers, Clock } from "lucide-react";
+import { BookOpen, BookMarked, Layers, Clock, Star, TrendingUp, Award, Users } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { ProgressListCard, InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type Subject = {
@@ -45,11 +46,40 @@ export default function SubjectsPage() {
         <StatCard icon={Layers} label="Classes Covered" value="8" color="bg-amber-500/10" />
         <StatCard icon={Clock} label="Weekly Periods" value="42" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="Subject Catalog"
-        description="All subjects offered across class levels"
-        columns={columns}
-        data={subjects}
+
+      <InfoGridCard
+        title="Subject Performance"
+        description="Average scores by subject"
+        items={[
+          { label: "Mathematics", value: "82%", icon: TrendingUp, color: "bg-blue-500/10" },
+          { label: "English", value: "78%", icon: BookOpen, color: "bg-green-500/10" },
+          { label: "Science", value: "75%", icon: Award, color: "bg-amber-500/10" },
+          { label: "Computer Science", value: "85%", icon: Star, color: "bg-purple-500/10" },
+        ]}
+      />
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Subject Catalog"
+            description="All subjects offered across class levels"
+            columns={columns}
+            data={subjects}
+          />
+        }
+        right={
+          <ProgressListCard
+            title="Weekly Period Allocation"
+            description="Periods per subject per week"
+            items={[
+              { label: "Mathematics", value: 12, display: "5 / week", color: "bg-blue-500" },
+              { label: "English", value: 12, display: "5 / week", color: "bg-green-500" },
+              { label: "Science", value: 10, display: "4 / week", color: "bg-amber-500" },
+              { label: "Urdu", value: 10, display: "4 / week", color: "bg-purple-500" },
+              { label: "Computer", value: 7, display: "3 / week", color: "bg-cyan-500" },
+            ]}
+          />
+        }
       />
     </StaticPageLayout>
   );

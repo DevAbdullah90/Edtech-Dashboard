@@ -1,7 +1,8 @@
-import { CalendarClock, Clock, BookOpen, Users } from "lucide-react";
+import { CalendarClock, Clock, BookOpen, Users, Coffee, GraduationCap, School } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, type Column } from "@/components/academy/static-components";
+import { InfoGridCard, ProgressListCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type Period = {
@@ -51,11 +52,40 @@ export default function TimetablePage() {
         <StatCard icon={BookOpen} label="Subjects Scheduled" value="9" color="bg-amber-500/10" />
         <StatCard icon={Users} label="Sections Covered" value="8" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="Class 5-A Weekly Timetable"
-        description="Standard weekly schedule for Class 5, Section A"
-        columns={columns}
-        data={timetable}
+
+      <InfoGridCard
+        title="Schedule Overview"
+        description="Weekly schedule metrics"
+        items={[
+          { label: "Teaching Periods", value: "35", icon: BookOpen, color: "bg-blue-500/10" },
+          { label: "Break Periods", value: "5", icon: Coffee, color: "bg-green-500/10" },
+          { label: "Subjects / Day", value: "6", icon: GraduationCap, color: "bg-amber-500/10" },
+          { label: "Rooms Used", value: "16", icon: School, color: "bg-purple-500/10" },
+        ]}
+      />
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Class 5-A Weekly Timetable"
+            description="Standard weekly schedule for Class 5, Section A"
+            columns={columns}
+            data={timetable}
+          />
+        }
+        right={
+          <ProgressListCard
+            title="Subject Time Allocation"
+            description="Percentage of weekly teaching time"
+            items={[
+              { label: "Mathematics", value: 14, display: "14%", color: "bg-blue-500" },
+              { label: "English", value: 14, display: "14%", color: "bg-green-500" },
+              { label: "Science", value: 11, display: "11%", color: "bg-amber-500" },
+              { label: "Urdu", value: 11, display: "11%", color: "bg-purple-500" },
+              { label: "Computer", value: 9, display: "9%", color: "bg-cyan-500" },
+            ]}
+          />
+        }
       />
     </StaticPageLayout>
   );

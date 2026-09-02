@@ -1,7 +1,8 @@
-import { TrendingUp, Award, Target, BarChart3 } from "lucide-react";
+import { TrendingUp, Award, Target, BarChart3, Star, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { LeaderboardCard, ProgressListCard, InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type PerformanceRecord = {
@@ -47,11 +48,42 @@ export default function PerformancePage() {
         <StatCard icon={Target} label="Above Average" value="68%" color="bg-amber-500/10" />
         <StatCard icon={BarChart3} label="Needs Support" value="86" color="bg-red-500/10" />
       </div>
-      <DataTable
-        title="Performance Overview"
-        description="Student performance across all subjects for Term 1"
-        columns={columns}
-        data={records}
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Performance Overview"
+            description="Student performance across all subjects for Term 1"
+            columns={columns}
+            data={records}
+          />
+        }
+        right={
+          <>
+            <LeaderboardCard
+              title="Top Performers"
+              description="Highest average scores this term"
+              items={[
+                { rank: 1, name: "Ahmed Khan", value: "92%", img: "https://i.pravatar.cc/150?img=8", rankClass: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400" },
+                { rank: 2, name: "Zainab Fatima", value: "90%", img: "https://i.pravatar.cc/150?img=16", rankClass: "bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300" },
+                { rank: 3, name: "Fatima Bibi", value: "88%", img: "https://i.pravatar.cc/150?img=26", rankClass: "bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-400" },
+                { rank: 4, name: "Hassan Abbas", value: "84%", img: "https://i.pravatar.cc/150?img=31" },
+                { rank: 5, name: "Maryam Noor", value: "79%", img: "https://i.pravatar.cc/150?img=47" },
+              ]}
+            />
+            <ProgressListCard
+              title="Grade Distribution"
+              description="Percentage of students per grade"
+              items={[
+                { label: "A+ (90-100%)", value: 10, display: "10%", color: "bg-green-500" },
+                { label: "A (80-89%)", value: 25, display: "25%", color: "bg-blue-500" },
+                { label: "B (70-79%)", value: 35, display: "35%", color: "bg-amber-500" },
+                { label: "C (60-69%)", value: 20, display: "20%", color: "bg-orange-500" },
+                { label: "D (Below 60%)", value: 10, display: "10%", color: "bg-red-500" },
+              ]}
+            />
+          </>
+        }
       />
     </StaticPageLayout>
   );

@@ -1,7 +1,8 @@
-import { FileText, ClipboardList, CheckCircle2, Clock } from "lucide-react";
+import { FileText, ClipboardList, CheckCircle2, Clock, CalendarClock, Send, AlertCircle } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { TimelineCard, InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type Assignment = {
@@ -45,11 +46,40 @@ export default function AssignmentsPage() {
         <StatCard icon={CheckCircle2} label="Completed" value="16" color="bg-green-500/10" />
         <StatCard icon={Clock} label="Due This Week" value="12" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="Assignment List"
-        description="Current and upcoming assignments across all classes"
-        columns={columns}
-        data={assignments}
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Assignment List"
+            description="Current and upcoming assignments across all classes"
+            columns={columns}
+            data={assignments}
+          />
+        }
+        right={
+          <>
+            <TimelineCard
+              title="Upcoming Deadlines"
+              description="Assignments due in the next 7 days"
+              items={[
+                { title: "Urdu Poetry Recitation", date: "Sep 3", description: "Class 8-C - Mrs. Ayesha Malik", status: "Completed" },
+                { title: "Photosynthesis Lab Report", date: "Sep 4", description: "Class 7-A - Mr. Imran Qureshi" },
+                { title: "Fractions Worksheet", date: "Sep 5", description: "Class 5-A - Prof. Abdul Rahman" },
+                { title: "Essay: My School", date: "Sep 7", description: "Class 6-B - Ms. Sana Javed" },
+              ]}
+            />
+            <InfoGridCard
+              title="Submission Stats"
+              description="Assignment completion metrics"
+              items={[
+                { label: "Submitted", value: "1,024", icon: Send, color: "bg-green-500/10" },
+                { label: "Pending", value: "224", icon: Clock, color: "bg-amber-500/10" },
+                { label: "Overdue", value: "18", icon: AlertCircle, color: "bg-red-500/10" },
+                { label: "Avg. Score", value: "82%", icon: CheckCircle2, color: "bg-blue-500/10" },
+              ]}
+            />
+          </>
+        }
       />
     </StaticPageLayout>
   );

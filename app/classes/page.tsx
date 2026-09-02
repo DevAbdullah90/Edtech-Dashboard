@@ -1,7 +1,8 @@
-import { School, Users, UserRound, BookOpen } from "lucide-react";
+import { School, Users, UserRound, BookOpen, DoorOpen, CalendarClock } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { ProgressListCard, InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type ClassInfo = {
@@ -47,11 +48,40 @@ export default function ClassesPage() {
         <StatCard icon={UserRound} label="Class Teachers" value="16" color="bg-amber-500/10" />
         <StatCard icon={BookOpen} label="Subjects Offered" value="12" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="Class Sections"
-        description="All class sections and their assigned teachers"
-        columns={columns}
-        data={classes}
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Class Sections"
+            description="All class sections and their assigned teachers"
+            columns={columns}
+            data={classes}
+          />
+        }
+        right={
+          <>
+            <ProgressListCard
+              title="Class Capacity"
+              description="Students per class level"
+              items={[
+                { label: "Class 5", value: 62, display: "62 / 100", color: "bg-blue-500", sub: "2 sections" },
+                { label: "Class 6", value: 68, display: "68 / 100", color: "bg-green-500", sub: "2 sections" },
+                { label: "Class 7", value: 60, display: "60 / 100", color: "bg-amber-500", sub: "2 sections" },
+                { label: "Class 8", value: 62, display: "62 / 100", color: "bg-purple-500", sub: "2 sections" },
+              ]}
+            />
+            <InfoGridCard
+              title="Facilities"
+              description="Classroom resources"
+              items={[
+                { label: "Classrooms", value: "16", icon: DoorOpen, color: "bg-blue-500/10" },
+                { label: "Computer Labs", value: "2", icon: School, color: "bg-green-500/10" },
+                { label: "Science Labs", value: "2", icon: BookOpen, color: "bg-amber-500/10" },
+                { label: "Periods / Week", value: "42", icon: CalendarClock, color: "bg-purple-500/10" },
+              ]}
+            />
+          </>
+        }
       />
     </StaticPageLayout>
   );

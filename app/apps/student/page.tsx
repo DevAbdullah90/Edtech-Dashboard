@@ -1,51 +1,84 @@
-import { GraduationCap, BookOpen, ClipboardCheck, Award } from "lucide-react";
+import { BookOpen, Award, CalendarClock, ClipboardList, FileText, MessageSquare, TrendingUp, Clock } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { InfoGridCard, ProgressListCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
-type StudentActivity = {
-  activity: string;
+type Subject = {
   subject: string;
-  date: string;
-  details: string;
+  teacher: string;
+  score: string;
+  grade: string;
+  attendance: string;
   status: string;
 };
 
-const activities: StudentActivity[] = [
-  { activity: "Assignment", subject: "Mathematics", date: "2026-09-01", details: "Fractions Worksheet - Due Sep 5", status: "Pending" },
-  { activity: "Quiz", subject: "English", date: "2026-09-02", details: "Grammar Quiz - Score 18/20", status: "Approved" },
-  { activity: "Attendance", subject: "—", date: "2026-09-02", details: "Present - 08:02 AM", status: "Present" },
-  { activity: "Exam Result", subject: "Science", date: "2026-08-30", details: "Mid-Term - 76/100", status: "Approved" },
-  { activity: "Homework", subject: "Urdu", date: "2026-09-01", details: "Poetry recitation - Due Sep 3", status: "Pending" },
-  { activity: "Certificate", subject: "Computer", date: "2026-08-25", details: "HTML Basics - Completed", status: "Approved" },
+const subjects: Subject[] = [
+  { subject: "Mathematics", teacher: "Prof. Abdul Rahman", score: "92%", grade: "A+", attendance: "96%", status: "Excellent" },
+  { subject: "English", teacher: "Ms. Sana Javed", score: "88%", grade: "A", attendance: "95%", status: "Excellent" },
+  { subject: "Science", teacher: "Mr. Imran Qureshi", score: "84%", grade: "A", attendance: "94%", status: "Good" },
+  { subject: "Urdu", teacher: "Mrs. Ayesha Malik", score: "79%", grade: "B+", attendance: "93%", status: "Good" },
+  { subject: "Computer Science", teacher: "Mr. Hassan Sheikh", score: "90%", grade: "A+", attendance: "97%", status: "Excellent" },
+  { subject: "Islamiat", teacher: "Ms. Rabia Khan", score: "85%", grade: "A", attendance: "95%", status: "Good" },
 ];
 
-const columns: Column<StudentActivity>[] = [
-  { key: "activity", header: "Activity", render: (a) => <span className="font-medium">{a.activity}</span> },
-  { key: "subject", header: "Subject", render: (a) => a.subject !== "—" ? <Badge variant="outline">{a.subject}</Badge> : <span className="text-muted-foreground">—</span> },
-  { key: "date", header: "Date", render: (a) => a.date },
-  { key: "details", header: "Details", render: (a) => <span className="text-muted-foreground">{a.details}</span> },
-  { key: "status", header: "Status", render: (a) => <StatusBadge status={a.status} /> },
+const columns: Column<Subject>[] = [
+  { key: "subject", header: "Subject", render: (r) => <span className="font-medium">{r.subject}</span> },
+  { key: "teacher", header: "Teacher", render: (r) => r.teacher },
+  { key: "score", header: "Score", render: (r) => <span className="font-medium">{r.score}</span> },
+  { key: "grade", header: "Grade", render: (r) => <Badge variant="outline">{r.grade}</Badge> },
+  { key: "attendance", header: "Attendance", render: (r) => r.attendance },
+  { key: "status", header: "Status", render: (r) => <StatusBadge status={r.status} /> },
 ];
 
 export default function StudentAppPage() {
   return (
     <StaticPageLayout
       title="Student App"
-      description="View your classes, assignments, grades, and activities."
+      description="Student application for viewing grades and assignments."
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={GraduationCap} label="My Class" value="Class 5-A" />
-        <StatCard icon={BookOpen} label="Subjects" value="8" color="bg-green-500/10" />
-        <StatCard icon={ClipboardCheck} label="Pending Work" value="3" color="bg-amber-500/10" />
-        <StatCard icon={Award} label="Avg Score" value="92%" color="bg-purple-500/10" />
+        <StatCard icon={BookOpen} label="My Subjects" value="6" />
+        <StatCard icon={Award} label="Overall Grade" value="A+" color="bg-green-500/10" />
+        <StatCard icon={ClipboardList} label="Assignments" value="4 due" color="bg-amber-500/10" />
+        <StatCard icon={CalendarClock} label="Upcoming Exams" value="2" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="My Activities"
-        description="Recent academic activities and assignments"
-        columns={columns}
-        data={activities}
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="My Subjects"
+            description="Academic performance across all subjects"
+            columns={columns}
+            data={subjects}
+          />
+        }
+        right={
+          <>
+            <ProgressListCard
+              title="Subject Scores"
+              description="My scores by subject"
+              items={[
+                { label: "Mathematics", value: 92, display: "92%", color: "bg-green-500" },
+                { label: "Computer Science", value: 90, display: "90%", color: "bg-blue-500" },
+                { label: "English", value: 88, display: "88%", color: "bg-purple-500" },
+                { label: "Islamiat", value: 85, display: "85%", color: "bg-amber-500" },
+                { label: "Urdu", value: 79, display: "79%", color: "bg-red-500" },
+              ]}
+            />
+            <InfoGridCard
+              title="Student Tools"
+              description="Features available to students"
+              items={[
+                { label: "View Grades", value: "Live", icon: TrendingUp, color: "bg-blue-500/10" },
+                { label: "Assignments", value: "Submit", icon: FileText, color: "bg-green-500/10" },
+                { label: "Timetable", value: "View", icon: Clock, color: "bg-amber-500/10" },
+                { label: "Message Teacher", value: "Available", icon: MessageSquare, color: "bg-purple-500/10" },
+              ]}
+            />
+          </>
+        }
       />
     </StaticPageLayout>
   );

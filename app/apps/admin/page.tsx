@@ -1,51 +1,80 @@
-import { UserCog, Users, Wallet, TrendingUp } from "lucide-react";
+import { LayoutDashboard, Users, Wallet, ShieldCheck, BarChart3, Settings, Megaphone, FileText } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
-type AdminMetric = {
-  metric: string;
-  value: string;
-  change: string;
-  period: string;
+type Module = {
+  module: string;
+  description: string;
+  users: string;
+  lastAccess: string;
   status: string;
 };
 
-const metrics: AdminMetric[] = [
-  { metric: "Total Students", value: "1,248", change: "+86 this term", period: "2026-2027", status: "Good" },
-  { metric: "Total Teachers", value: "84", change: "+5 this year", period: "2026-2027", status: "Good" },
-  { metric: "Monthly Fee Collection", value: "Rs 6.2M", change: "+8% vs last month", period: "August 2026", status: "Excellent" },
-  { metric: "Attendance Rate", value: "94.2%", change: "+1.2% vs last month", period: "August 2026", status: "Good" },
-  { metric: "Admission Applications", value: "86", change: "54 approved", period: "2026-2027", status: "Good" },
-  { metric: "Exam Pass Rate", value: "94.5%", change: "+2.1% vs last term", period: "Mid-Term", status: "Excellent" },
+const modules: Module[] = [
+  { module: "Dashboard", description: "Overview of school metrics", users: "4", lastAccess: "2026-09-02", status: "Active" },
+  { module: "Student Management", description: "Manage student records", users: "4", lastAccess: "2026-09-02", status: "Active" },
+  { module: "Finance", description: "Fees and payments", users: "3", lastAccess: "2026-09-01", status: "Active" },
+  { module: "Admissions", description: "Process applications", users: "2", lastAccess: "2026-09-01", status: "Active" },
+  { module: "Reports", description: "Generate reports", users: "4", lastAccess: "2026-08-31", status: "Active" },
+  { module: "Settings", description: "System configuration", users: "2", lastAccess: "2026-08-28", status: "Active" },
 ];
 
-const columns: Column<AdminMetric>[] = [
-  { key: "metric", header: "Metric", render: (m) => <span className="font-medium">{m.metric}</span> },
-  { key: "value", header: "Value", render: (m) => <span className="font-medium">{m.value}</span> },
-  { key: "change", header: "Change", render: (m) => <span className="text-green-600">{m.change}</span> },
-  { key: "period", header: "Period", render: (m) => <Badge variant="outline">{m.period}</Badge> },
-  { key: "status", header: "Status", render: (m) => <StatusBadge status={m.status} /> },
+const columns: Column<Module>[] = [
+  { key: "module", header: "Module", render: (r) => <span className="font-medium">{r.module}</span> },
+  { key: "description", header: "Description", render: (r) => <span className="text-muted-foreground">{r.description}</span> },
+  { key: "users", header: "Users", render: (r) => <Badge variant="outline">{r.users}</Badge> },
+  { key: "lastAccess", header: "Last Access", render: (r) => <span className="text-muted-foreground">{r.lastAccess}</span> },
+  { key: "status", header: "Status", render: (r) => <StatusBadge status={r.status} /> },
 ];
 
 export default function AdminAppPage() {
   return (
     <StaticPageLayout
-      title="Principal / Admin App"
-      description="Overview of school operations for the principal and administrators."
+      title="Admin App"
+      description="Full-featured admin application for school management."
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={UserCog} label="Admin Users" value="2" />
-        <StatCard icon={Users} label="Total Users" value="2,525" color="bg-green-500/10" />
-        <StatCard icon={Wallet} label="Monthly Revenue" value="Rs 6.2M" color="bg-amber-500/10" />
-        <StatCard icon={TrendingUp} label="Growth Rate" value="8.2%" color="bg-purple-500/10" />
+        <StatCard icon={LayoutDashboard} label="Modules" value="12" />
+        <StatCard icon={Users} label="Admin Users" value="4" color="bg-green-500/10" />
+        <StatCard icon={Wallet} label="Finance Access" value="Full" color="bg-amber-500/10" />
+        <StatCard icon={ShieldCheck} label="Permissions" value="Full" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="School Overview"
-        description="Key performance indicators for the current academic year"
-        columns={columns}
-        data={metrics}
+
+      <InfoGridCard
+        title="Admin Capabilities"
+        description="Key features available to administrators"
+        items={[
+          { label: "Dashboard", value: "Full metrics", icon: LayoutDashboard, color: "bg-blue-500/10" },
+          { label: "User Management", value: "All roles", icon: Users, color: "bg-green-500/10" },
+          { label: "Reports", value: "All types", icon: BarChart3, color: "bg-amber-500/10" },
+          { label: "Announcements", value: "Publish", icon: Megaphone, color: "bg-purple-500/10" },
+        ]}
+      />
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Admin Modules"
+            description="Modules accessible in the admin application"
+            columns={columns}
+            data={modules}
+          />
+        }
+        right={
+          <InfoGridCard
+            title="Admin Tools"
+            description="Administrative tools and controls"
+            items={[
+              { label: "System Settings", value: "Full access", icon: Settings, color: "bg-blue-500/10" },
+              { label: "Security", value: "Manage", icon: ShieldCheck, color: "bg-green-500/10" },
+              { label: "Reports", value: "Generate", icon: FileText, color: "bg-amber-500/10" },
+              { label: "User Roles", value: "Manage", icon: Users, color: "bg-purple-500/10" },
+            ]}
+          />
+        }
       />
     </StaticPageLayout>
   );

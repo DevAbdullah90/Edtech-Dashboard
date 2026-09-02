@@ -1,7 +1,8 @@
-import { FileCheck, ClipboardList, Award, CalendarClock } from "lucide-react";
+import { FileCheck, ClipboardList, Award, CalendarClock, Star, TrendingUp, AlertTriangle } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { InfoGridCard, LeaderboardCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type ExamResult = {
@@ -47,11 +48,40 @@ export default function ExamsResultsPage() {
         <StatCard icon={Award} label="Pass Rate" value="94.5%" color="bg-amber-500/10" />
         <StatCard icon={CalendarClock} label="Upcoming Exams" value="3" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="Exam Results"
-        description="Mid-term examination results for all students"
-        columns={columns}
-        data={results}
+
+      <InfoGridCard
+        title="Exam Summary"
+        description="Mid-term examination statistics"
+        items={[
+          { label: "Total Students", value: "1,248", icon: ClipboardList, color: "bg-blue-500/10" },
+          { label: "Passed", value: "1,179", icon: Award, color: "bg-green-500/10" },
+          { label: "Failed", value: "69", icon: AlertTriangle, color: "bg-red-500/10" },
+          { label: "Top Score", value: "98%", icon: Star, color: "bg-amber-500/10" },
+        ]}
+      />
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Exam Results"
+            description="Mid-term examination results for all students"
+            columns={columns}
+            data={results}
+          />
+        }
+        right={
+          <LeaderboardCard
+            title="Top Scorers"
+            description="Highest scores in mid-term exams"
+            items={[
+              { rank: 1, name: "Ahmed Khan", value: "92%", img: "https://i.pravatar.cc/150?img=8", rankClass: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400" },
+              { rank: 2, name: "Zainab Fatima", value: "90%", img: "https://i.pravatar.cc/150?img=16", rankClass: "bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300" },
+              { rank: 3, name: "Fatima Bibi", value: "88%", img: "https://i.pravatar.cc/150?img=26", rankClass: "bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-400" },
+              { rank: 4, name: "Hassan Abbas", value: "84%", img: "https://i.pravatar.cc/150?img=31" },
+              { rank: 5, name: "Maryam Noor", value: "79%", img: "https://i.pravatar.cc/150?img=47" },
+            ]}
+          />
+        }
       />
     </StaticPageLayout>
   );

@@ -1,35 +1,38 @@
-import { CalendarCheck, UserCheck, UserX, TrendingUp } from "lucide-react";
+import { CalendarCheck2, UserCheck, UserX, Clock, TrendingUp, AlertTriangle, CheckCircle2 } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { ProgressListCard, InfoGridCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type AttendanceReport = {
-  student: string;
-  rollNo: string;
   class: string;
+  totalStudents: string;
   present: string;
   absent: string;
+  late: string;
   rate: string;
   status: string;
 };
 
 const reports: AttendanceReport[] = [
-  { student: "Ahmed Khan", rollNo: "ST-2024-001", class: "Class 5-A", present: "58", absent: "2", rate: "96.7%", status: "Good" },
-  { student: "Fatima Bibi", rollNo: "ST-2024-002", class: "Class 6-B", present: "57", absent: "3", rate: "95.0%", status: "Good" },
-  { student: "Muhammad Ali", rollNo: "ST-2024-003", class: "Class 7-A", present: "52", absent: "8", rate: "86.7%", status: "Average" },
-  { student: "Ayesha Siddiqui", rollNo: "ST-2024-004", class: "Class 8-C", present: "45", absent: "15", rate: "75.0%", status: "Poor" },
-  { student: "Hassan Abbas", rollNo: "ST-2024-005", class: "Class 5-B", present: "56", absent: "4", rate: "93.3%", status: "Good" },
-  { student: "Zainab Fatima", rollNo: "ST-2024-006", class: "Class 6-A", present: "59", absent: "1", rate: "98.3%", status: "Excellent" },
+  { class: "Class 5-A", totalStudents: "32", present: "30", absent: "1", late: "1", rate: "94%", status: "Good" },
+  { class: "Class 5-B", totalStudents: "31", present: "29", absent: "1", late: "1", rate: "94%", status: "Good" },
+  { class: "Class 6-A", totalStudents: "35", present: "33", absent: "1", late: "1", rate: "94%", status: "Good" },
+  { class: "Class 6-B", totalStudents: "33", present: "30", absent: "2", late: "1", rate: "91%", status: "Average" },
+  { class: "Class 7-A", totalStudents: "31", present: "28", absent: "2", late: "1", rate: "90%", status: "Average" },
+  { class: "Class 7-B", totalStudents: "29", present: "26", absent: "2", late: "1", rate: "90%", status: "Average" },
+  { class: "Class 8-A", totalStudents: "30", present: "28", absent: "1", late: "1", rate: "93%", status: "Good" },
+  { class: "Class 8-C", totalStudents: "28", present: "24", absent: "3", late: "1", rate: "86%", status: "Needs Attention" },
 ];
 
 const columns: Column<AttendanceReport>[] = [
-  { key: "student", header: "Student", render: (r) => <span className="font-medium">{r.student}</span> },
-  { key: "rollNo", header: "Roll No", render: (r) => <span className="text-muted-foreground">{r.rollNo}</span> },
-  { key: "class", header: "Class", render: (r) => <Badge variant="outline">{r.class}</Badge> },
-  { key: "present", header: "Present Days", render: (r) => r.present },
-  { key: "absent", header: "Absent Days", render: (r) => <span className={Number(r.absent) > 10 ? "text-red-600" : "text-muted-foreground"}>{r.absent}</span> },
-  { key: "rate", header: "Attendance Rate", render: (r) => <span className="font-medium">{r.rate}</span> },
+  { key: "class", header: "Class", render: (r) => <span className="font-medium">{r.class}</span> },
+  { key: "totalStudents", header: "Students", render: (r) => r.totalStudents },
+  { key: "present", header: "Present", render: (r) => <span className="text-green-600 dark:text-green-400">{r.present}</span> },
+  { key: "absent", header: "Absent", render: (r) => <span className="text-red-600 dark:text-red-400">{r.absent}</span> },
+  { key: "late", header: "Late", render: (r) => <span className="text-amber-600 dark:text-amber-400">{r.late}</span> },
+  { key: "rate", header: "Rate", render: (r) => <span className="font-medium">{r.rate}</span> },
   { key: "status", header: "Status", render: (r) => <StatusBadge status={r.status} /> },
 ];
 
@@ -37,19 +40,48 @@ export default function AttendanceReportsPage() {
   return (
     <StaticPageLayout
       title="Attendance Reports"
-      description="Generate and analyze attendance reports."
+      description="Class-wise attendance reports and trends."
     >
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard icon={CalendarCheck} label="Avg Attendance" value="94.2%" />
-        <StatCard icon={UserCheck} label="Good (90%+)" value="1,086" color="bg-green-500/10" />
-        <StatCard icon={UserX} label="Below 80%" value="86" color="bg-red-500/10" />
-        <StatCard icon={TrendingUp} label="Improving" value="124" color="bg-amber-500/10" />
+        <StatCard icon={CalendarCheck2} label="Avg. Attendance" value="94.2%" />
+        <StatCard icon={UserCheck} label="Present Today" value="1,176" color="bg-green-500/10" />
+        <StatCard icon={UserX} label="Absent Today" value="72" color="bg-red-500/10" />
+        <StatCard icon={Clock} label="Late Today" value="18" color="bg-amber-500/10" />
       </div>
-      <DataTable
-        title="Attendance Summary"
-        description="Attendance rates for Term 1 (60 school days)"
-        columns={columns}
-        data={reports}
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Class-wise Attendance"
+            description="Today's attendance report by class"
+            columns={columns}
+            data={reports}
+          />
+        }
+        right={
+          <>
+            <ProgressListCard
+              title="Attendance by Class"
+              description="Today's attendance rate per class"
+              items={[
+                { label: "Class 5", value: 94, display: "94%", color: "bg-green-500" },
+                { label: "Class 6", value: 92, display: "92%", color: "bg-blue-500" },
+                { label: "Class 7", value: 90, display: "90%", color: "bg-amber-500" },
+                { label: "Class 8", value: 89, display: "89%", color: "bg-red-500" },
+              ]}
+            />
+            <InfoGridCard
+              title="Weekly Trend"
+              description="This week's attendance summary"
+              items={[
+                { label: "Best Day", value: "Mon 96%", icon: TrendingUp, color: "bg-green-500/10" },
+                { label: "Worst Day", value: "Fri 91%", icon: AlertTriangle, color: "bg-red-500/10" },
+                { label: "Avg. Rate", value: "94.2%", icon: CheckCircle2, color: "bg-blue-500/10" },
+                { label: "Total Absences", value: "86", icon: UserX, color: "bg-amber-500/10" },
+              ]}
+            />
+          </>
+        }
       />
     </StaticPageLayout>
   );

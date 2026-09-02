@@ -1,7 +1,8 @@
-import { UserRound, Users, Award, Clock } from "lucide-react";
+import { UserRound, Users, Award, Clock, BookOpen, GraduationCap, Star, HeartHandshake } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { InfoGridCard, LeaderboardCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type Teacher = {
@@ -47,11 +48,42 @@ export default function TeachersPage() {
         <StatCard icon={Award} label="Qualified (Masters+)" value="62" color="bg-amber-500/10" />
         <StatCard icon={Clock} label="Avg. Experience" value="8.5 yrs" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="Teaching Staff"
-        description="All faculty members and their assignments"
-        columns={columns}
-        data={teachers}
+
+      <InfoGridCard
+        title="Staff Overview"
+        description="Key staff metrics for the current academic year"
+        items={[
+          { label: "Full-time Teachers", value: "72", icon: UserRound, color: "bg-blue-500/10" },
+          { label: "Part-time Teachers", value: "12", icon: Users, color: "bg-green-500/10" },
+          { label: "Masters Degree", value: "62", icon: GraduationCap, color: "bg-amber-500/10" },
+          { label: "PhD Holders", value: "8", icon: Award, color: "bg-purple-500/10" },
+          { label: "Subjects Taught", value: "12", icon: BookOpen, color: "bg-cyan-500/10" },
+          { label: "Avg. Rating", value: "4.6 / 5", icon: Star, color: "bg-orange-500/10" },
+        ]}
+      />
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Teaching Staff"
+            description="All faculty members and their assignments"
+            columns={columns}
+            data={teachers}
+          />
+        }
+        right={
+          <LeaderboardCard
+            title="Teacher of the Month"
+            description="Top rated teachers"
+            items={[
+              { rank: 1, name: "Prof. Abdul Rahman", value: "4.9★", img: "https://i.pravatar.cc/150?img=12", rankClass: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400" },
+              { rank: 2, name: "Ms. Sana Javed", value: "4.8★", img: "https://i.pravatar.cc/150?img=32", rankClass: "bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300" },
+              { rank: 3, name: "Mr. Imran Qureshi", value: "4.7★", img: "https://i.pravatar.cc/150?img=15", rankClass: "bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-400" },
+              { rank: 4, name: "Mrs. Ayesha Malik", value: "4.6★", img: "https://i.pravatar.cc/150?img=44" },
+              { rank: 5, name: "Ms. Rabia Khan", value: "4.5★", img: "https://i.pravatar.cc/150?img=49" },
+            ]}
+          />
+        }
       />
     </StaticPageLayout>
   );

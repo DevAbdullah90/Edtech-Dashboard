@@ -1,7 +1,8 @@
-import { HeartHandshake, Users, MessageSquare, Phone } from "lucide-react";
+import { HeartHandshake, Users, MessageSquare, Phone, Mail, UserCheck, Clock } from "lucide-react";
 
 import { StaticPageLayout } from "@/components/academy/static-page-layout";
 import { StatCard, DataTable, StatusBadge, type Column } from "@/components/academy/static-components";
+import { InfoGridCard, TimelineCard, TwoColumnLayout } from "@/components/academy/static-patterns";
 import { Badge } from "@/components/ui/badge";
 
 type Parent = {
@@ -43,11 +44,39 @@ export default function ParentsPage() {
         <StatCard icon={MessageSquare} label="Messages Sent" value="3,240" color="bg-amber-500/10" />
         <StatCard icon={Phone} label="Verified Contacts" value="1,170" color="bg-purple-500/10" />
       </div>
-      <DataTable
-        title="Parent Directory"
-        description="Parent/guardian accounts linked to student records"
-        columns={columns}
-        data={parents}
+
+      <InfoGridCard
+        title="Parent Engagement"
+        description="Communication and engagement metrics"
+        items={[
+          { label: "Email Verified", value: "1,142", icon: Mail, color: "bg-blue-500/10" },
+          { label: "Phone Verified", value: "1,170", icon: Phone, color: "bg-green-500/10" },
+          { label: "App Active", value: "1,086", icon: UserCheck, color: "bg-amber-500/10" },
+          { label: "Avg Response Time", value: "2.5 hrs", icon: Clock, color: "bg-purple-500/10" },
+        ]}
+      />
+
+      <TwoColumnLayout
+        left={
+          <DataTable
+            title="Parent Directory"
+            description="Parent/guardian accounts linked to student records"
+            columns={columns}
+            data={parents}
+          />
+        }
+        right={
+          <TimelineCard
+            title="Recent Parent Activity"
+            description="Latest interactions with parents"
+            items={[
+              { title: "Fee payment received", date: "Today", description: "Imran Khan paid Rs 5,000 for Ahmed Khan", status: "Completed" },
+              { title: "Message sent", date: "Yesterday", description: "Attendance alert sent to Ayesha Siddiqui's parent" },
+              { title: "Meeting scheduled", date: "Sep 1", description: "Parent-teacher meeting booked for Class 5-A" },
+              { title: "Account created", date: "Aug 28", description: "New parent account for Hamza Ahmed" },
+            ]}
+          />
+        }
       />
     </StaticPageLayout>
   );
