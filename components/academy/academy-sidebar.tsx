@@ -7,6 +7,7 @@ import { ChevronRight, Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { navSections, type NavItem } from "./nav-data";
+import { useSidebar } from "./sidebar-context";
 
 function SidebarNavItem({
   item,
@@ -86,9 +87,10 @@ function SidebarNavItem({
 
 export function AcademySidebar() {
   const pathname = usePathname();
+  const { collapsed } = useSidebar();
 
   return (
-    <div className="group peer hidden text-sidebar-foreground md:block">
+    <div className={cn("group peer hidden text-sidebar-foreground md:block", collapsed && "md:hidden")}>
       <div data-slot="sidebar-gap" className="relative w-64 bg-transparent transition-[width] duration-200 ease-linear" />
       <div className="fixed inset-y-0 z-10 hidden h-svh w-64 p-2 transition-[left,right,width] duration-200 ease-linear md:flex">
         <div className="flex size-full flex-col rounded-lg bg-sidebar shadow-sm ring-1 ring-sidebar-border">
